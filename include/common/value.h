@@ -88,9 +88,10 @@ namespace meow::common {
             return std::visit(overloaded{std::forward<Ts>(ts)...}, *this);
         }
 
-        Int toInt();
-        Float toFloat();
-        String toString();
+        int64_t asInt() const;
+        double asFloat() const;
+        bool asBool() const;
+        std::string asString() const;
 
         // ... for all types    
     };

@@ -38,6 +38,12 @@ namespace meow::common {
         void reserve(size_t capacity) {
             data.reserve(capacity);
         }
+        inline constexpr std::vector<uint8_t>::iterator begin() noexcept {
+            return data.begin();
+        }
+        inline constexpr std::vector<uint8_t>::iterator end() noexcept {
+            return data.end();
+        }
 
         void trace(meow::memory::GCVisitor&) override {}
     };
@@ -57,6 +63,15 @@ namespace meow::common {
 
         size_t size() const {
             return data.size();
+        }
+        bool empty() const {
+            return data.empty();
+        }
+        inline constexpr std::string::iterator begin() noexcept {
+            return data.begin();
+        }
+        inline constexpr std::string::iterator end() noexcept {
+            return data.end();
         }
 
         void trace(meow::memory::GCVisitor&) override {}
@@ -82,6 +97,9 @@ namespace meow::common {
         size_t size() const {
             return elements.size();
         }
+        bool empty() const {
+            return elements.empty();
+        }
         void push(const meow::common::Value& value) {
             elements.push_back(value);
         }
@@ -90,6 +108,12 @@ namespace meow::common {
         }
         void reserve(size_t capacity) {
             elements.reserve(capacity);
+        }
+        inline constexpr std::vector<meow::common::Value>::iterator begin() noexcept {
+            return elements.begin();
+        }
+        inline constexpr std::vector<meow::common::Value>::iterator end() noexcept {
+            return elements.end();
         }
 
         void trace(meow::memory::GCVisitor& visitor) override {
@@ -141,6 +165,15 @@ namespace meow::common {
         size_t size() const {
             return methods.size();
         }
+        bool empty() const {
+            return methods.empty();
+        }
+        inline constexpr std::unordered_map<std::string, meow::common::Value>::const_iterator begin() const noexcept {
+            return methods.begin();
+        }
+        inline constexpr std::unordered_map<std::string, meow::common::Value>::const_iterator end() const noexcept {
+            return methods.end();
+        }
 
         void trace(meow::memory::GCVisitor& visitor) override {
             for (auto& pair : methods) {
@@ -148,4 +181,6 @@ namespace meow::common {
             }
         }
     };
+
+    
 }
