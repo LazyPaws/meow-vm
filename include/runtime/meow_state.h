@@ -4,8 +4,12 @@
 #include "common/definitions.h"
 #include "common/pch.h"
 
+namespace meow::memory {
+    struct MeowObject;
+}
+
 namespace meow::runtime {
-    struct MeowStates {
+    struct MeowState {
         std::vector<meow::common::CallFrame> callStack;
         std::vector<meow::common::Value> stackSlots;
         std::vector<meow::common::Upvalue> openUpvalues;
@@ -18,6 +22,10 @@ namespace meow::runtime {
             openUpvalues.clear();
             moduleCache.clear();
             exceptionHandlers.clear();
+        }
+
+        inline std::vector<meow::memory::MeowObject*> getRoots() const {
+
         }
     };
 }

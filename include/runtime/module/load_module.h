@@ -7,8 +7,7 @@ namespace meow::runtime::module {
     struct Diagnostic;
 
     struct ModuleManager {
-
+        
+        Module loadModule(const std::string& modulePath);
     };
-
-    Module loadModule(const std::string& modulePath);
 }

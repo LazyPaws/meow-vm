@@ -1,5 +1,7 @@
 #include "meow-vm/meow_vm.h"
 
+using namespace meow::vm;
+
 MeowVM::MeowVM(const std::string& entry, int argc, char** argv) : entryPointDir(entry) {
     commandLineArgs.reserve(argc);
 
@@ -9,7 +11,7 @@ MeowVM::MeowVM(const std::string& entry, int argc, char** argv) : entryPointDir(
 }
 
 void MeowVM::interpret(const std::string& entryPath) {
-    states.reset();
+    state.reset();
 
     try {
 
