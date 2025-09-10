@@ -1,17 +1,8 @@
-/**
- * @file meow_vm.h
- * @author lazypaws
- * @brief Defines core vm of MeowScript
- */
-
 #pragma once
 
 #include "runtime/meow_state.h"
 
 namespace meow::vm {
-    /**
-     * @class MeowVM
-     */
     class MeowVM {
     public:
         MeowVM(const std::string& entry, int argc, char** argv);
