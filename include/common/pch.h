@@ -1,3 +1,11 @@
+// SPDX-License-Identifier: MIT
+/**
+ * @file pch.h
+ * @author lazypaws
+ * @brief Precompiled headers for MeowScript project
+ * @copyright Copyright(c) 2025 LazyPaws
+ */
+
 #pragma once
 
 // Containers

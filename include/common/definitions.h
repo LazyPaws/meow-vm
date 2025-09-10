@@ -1,10 +1,10 @@
+// SPDX-License-Identifier: MIT
 /**
  * @file definitions.h
  * @author lazypaws
  * @brief Defines main values in MeowScript
  * @note Object values managed by Garbage Collector
- * @copyright Copyright(c) 2025 LazyPaws - All rights reserved
- * @warning No copying or use for personal or commercial purposes is permitted!
+ * @copyright Copyright(c) 2025 LazyPaws
  */
 
 #pragma once
@@ -371,6 +371,7 @@ namespace meow::common {
         /**
          * @brief Gets the value at specified key
          * @param[in] key The key of value to retrieve
+         * @tparam T the type of key
          * @return The read-only value at specified key
          * @warning No bound checking
          */
@@ -401,13 +402,13 @@ namespace meow::common {
             return methods.at(key->get());
         }
 
-        template <typename T>
-
         /**
          * @brief Sets the value at specified normal string key
          * @param[in] key The normal string key of value to set
          * @param[in] value The new value to assign to the value at normal string key
+         * @tparam T the type of key
          */
+        template <typename T>
         void set(const T& key, const Value& value) {
             methods[key] = value;
         }
@@ -437,13 +438,13 @@ namespace meow::common {
             return methods.empty();
         }
 
-        template <typename T>
-
         /**
          * @brief Checks if the object has that normal string key
          * @param[in] key The normal string key want to check if
-         * @return 'true' if the object is empty, 'false' otherwise
+         * @tparam T the type of key
+         * @return 'true' if the key exists, 'false' otherwise
          */
+        template <typename T>
         bool has(const T& key) const {
             return methods.find(key) != methods.end();
         }
@@ -485,4 +486,8 @@ namespace meow::common {
             }
         }
     };   
+
+    struct ObjProto {
+
+    };
 }

@@ -1,31 +1,46 @@
+// SPDX-License-Identifier: MIT
+/**
+ * @file value.h
+ * @author lazypaws
+ * @brief Defines all values in MeowScript
+ * @copyright Copyright(c) 2025 LazyPaws
+ */
+
 #pragma once
 
 #include "common/pch.h"
 
 namespace meow::common {
-    // Objects
+    // Forward declarations for heap-allocated objects
     struct ObjBytes;
     struct ObjString;
     struct ObjArray;
     struct ObjHash;
-
     struct ObjModule;
-    struct ObjFunctionProto;
+    struct ObjProto;
 
-    // Value types
-    using Null = std::monostate;
-    using Int = int64_t;
-    using Float = double;
-    using Bool = bool;
+    /**
+     * @name Primitive value types
+     */
+    using Null = std::monostate;    // Null type
+    using Int = int64_t;            // Integer type
+    using Float = double;           // Floating-point type
+    using Bool = bool;              // Boolean type
 
+    /**
+     * @name Object references
+     * @note All managed by GC
+     */
     using Bytes = ObjBytes*;
     using String = ObjString*;
     using Array = ObjArray*;
     using Object = ObjHash*;
-
     using Module = ObjModule*;
-    using Proto = ObjFunctionProto*;
+    using Proto = ObjProto*;
 
+    /**
+     * @brief Union for all supported types
+     */
     using BaseValue = std::variant<
         Null,
         Int,
@@ -39,15 +54,26 @@ namespace meow::common {
         Proto
     >;
 
+    /**
+     * @brief Helper for std::visit with mutiple lambdas
+     */
     template<class... Ts> 
     struct overloaded : Ts... { 
         using Ts::operator()...; 
     };
-
     template<class... Ts> 
     overloaded(Ts...) -> overloaded<Ts...>;
 
+    /**
+     * @struct Value
+     * @brief Main definition of Value in MeowScript
+     * @details Inherits from BaseValue, provides multiple ultilities
+     */
     struct Value: BaseValue {
+        /**
+         * @brief Default constructor for Value
+         * @details Initializes Value with null value
+         */
         Value() : BaseValue(Null{}) {}
 
         template <typename T>
