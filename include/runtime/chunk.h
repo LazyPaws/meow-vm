@@ -2,6 +2,7 @@
 
 #include "common/value.h"
 #include "common/pch.h"
+#include "memory/gc_visitor.h"
 
 namespace meow::runtime {
     struct Chunk {
@@ -35,6 +36,12 @@ namespace meow::runtime {
         meow::common::Value readConstant(size_t index) const {
             if (index < 0 || index >= constantPool.size()) {
                 return meow::common::Value(meow::common::Null{});
+            }
+        }
+
+        inline void trace(meow::memory::GCVisitor& visitor) {
+            for (auto& value : constantPool) {
+                visitor.visitValue(value);
             }
         }
     };

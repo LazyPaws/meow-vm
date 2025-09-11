@@ -14,6 +14,10 @@
 #include "memory/gc_visitor.h"
 #include "pch.h"
 
+namespace meow::runtime {
+    struct Chunk;
+}
+
 namespace meow::common {
     // Defines base objects
 
@@ -162,6 +166,7 @@ namespace meow::common {
         /**
          * @brief Gets the character at specified index
          * @param[in] index The index of character to retrieve
+         * @return The read-only character at specified index
          */
         char get(size_t index) const {
             return data[index];
@@ -369,36 +374,24 @@ namespace meow::common {
         }
 
         /**
-         * @brief Gets the value at specified key
-         * @param[in] key The key of value to retrieve
+         * @brief Gets the value at specified normal string key
+         * @param[in] key The normal string key of value to retrieve
          * @tparam T the type of key
-         * @return The read-only value at specified key
+         * @return The read-only value at specified normal string key
          * @warning No bound checking
          */
         template <typename T>
         const Value& get(const T& key) const {
-            // auto it = methods.find(key);
-            // if (it != methods.end()) {
-            //     return it->second;
-            // }
-            // return Value(Null{});
-
             return methods.at(key);
         }
 
         /**
-         * @brief Gets the value at specified ObjString* key
-         * @param[in] key The ObjString* key of value to retrieve
+         * @brief Gets the value at specified String object key
+         * @param[in] key The String object key of value to retrieve
          * @return The read-only value at specified key
          * @warning No bound checking
          */
         const Value& get(const String& key) const {
-            // auto it = methods.find(key->get());
-            // if (it != methods.end()) {
-            //     return it->second;
-            // }
-            // return Value(Null{});
-
             return methods.at(key->get());
         }
 
@@ -414,9 +407,9 @@ namespace meow::common {
         }
 
         /**
-         * @brief Sets the value at specified ObjString* key
-         * @param[in] key The ObjString* key of value to set
-         * @param[in] value The new value to assign to the value at ObjString* key
+         * @brief Sets the value at specified String object key
+         * @param[in] key The String object key of value to set
+         * @param[in] value The new value to assign to the value at String object key
          */
         void set(const String& key, const Value& value) {
             methods[key->get()] = value;
@@ -450,8 +443,8 @@ namespace meow::common {
         }
 
         /**
-         * @brief Checks if the object has that ObjString* key
-         * @param[in] key The ObjString* key want to check if
+         * @brief Checks if the object has that String object key
+         * @param[in] key The String object key want to check if
          * @return 'true' if the object is empty, 'false' otherwise
          */
         bool has(const String& key) const {
@@ -487,7 +480,28 @@ namespace meow::common {
         }
     };   
 
-    struct ObjProto {
+    struct UpvalueDesc {
+        bool isLocal = true;
+        size_t index;
+    };
+
+    /**
+     * @struct ObjProto
+     * @brief Represents function proto in MeowScript
+     */
+    struct ObjProto : meow::memory::MeowObject {
+        size_t registers;
+        size_t upvalues;
+
+        meow::runtime::Chunk* chunk;
+        void trace(meow::memory::GCVisitor& visitor) override;
+    };
+
+    struct ObjClosure : meow::memory::MeowObject {
+
+    };
+
+    struct CallFrame {
 
     };
 }

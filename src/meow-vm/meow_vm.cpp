@@ -12,12 +12,4 @@ MeowVM::MeowVM(const std::string& entry, int argc, char** argv) : entryPointDir(
 
 void MeowVM::interpret(const std::string& entryPath) {
     state.reset();
-
-    try {
-
-    } catch (const std::exception& e) {
-
-    } catch (...) {
-        
-    }
 }
